@@ -7,7 +7,7 @@ const double PI = atan(1.0) * 4;
 const int mu = 5;
 const int lambda = 35;
 const int eta = lambda / mu;
-const double sigma = 0.1;
+const double sigma = 1;
 
 using namespace std;
 
@@ -87,48 +87,6 @@ public:
                     result3[i] = func3(x3[i], y3[i]);
                 }
             }
-
-            min1 = result1[0]; min2 = result2[0]; min3 = result3[0];
-            for (int i = 0; i < mu; i++)
-            {
-                if (a == 1)
-                {
-                    if (result1[i] < min1)
-                    {
-                        min1 = result1[i];
-                        index = i;
-                    }
-                }
-                if (a == 2)
-                {
-                    if (result2[i] < min2)
-                    {
-                        min2 = result2[i];
-                        index = i;
-                    }
-                }
-                if (a == 3)
-                {
-                    if (result3[i] < min3)
-                    {
-                        min3 = result3[i];
-                        index = i;
-                    }
-                }
-            }
-            if (a == 1)
-            {
-                global_min.push_back(min1);
-            }
-            if (a == 2)
-            {
-                global_min.push_back(min2);
-            }
-            if (a == 3)
-            {
-                global_min.push_back(min3);
-            }
-
             int e = 0;
             for (int i = 0; i < mu; i++)
             {
@@ -172,7 +130,7 @@ public:
             }
 
             //lambda+mu
-            for (int i = 0; i < mu + lambda; i++)
+            /*for (int i = 0; i < mu + lambda; i++)
             {
                 if (a == 1)
                 {
@@ -254,11 +212,11 @@ public:
                     x3[i] = mass_x_y[i][1];
                     y3[i] = mass_x_y[i][2];
                 }
-            }
+            }*/
             ////////
 
-            //lambda, mu
-           /* for (int i = 0; i < lambda; i++)
+            //алгоритм лямбда, мю
+            for (int i = 0; i < lambda; i++)
             {
                 if (a == 1)
                 {
@@ -313,120 +271,50 @@ public:
                     x3[i] = mass_x_y[i][1];
                     y3[i] = mass_x_y[i][2];
                 }
-            }*/
+            }
             ///////
             iteration++;
-            int r;
             if (a == 1)
             {
-                r = 1;
+                if (iteration == 7)
+                {
+                    flag = false;
+                    cout << "iteration = " << iteration << endl;
+                    cout << "f = " << mass_x_y[0][0] << " x = " << mass_x_y[0][1] << " y = " << mass_x_y[0][2] << endl;
+                }
             }
             if (a == 2)
             {
-                r = 4;
+                if (iteration == 7)
+                {
+                    flag = false;
+                    cout << "iteration = " << iteration << endl;
+                    cout << "f = " << mass_x_y[0][0] << " x = " << mass_x_y[0][1] << " y = " << mass_x_y[0][2] << endl;
+                }
             }
             if (a == 3)
             {
-                r = 7;
-            }
-            if (iteration % r == 0)
-            {
-                if (a == 1)
+                if (iteration == 7)
                 {
-                    new_min1 = func1(x1[0], y1[0]);
-                    double minn;
-                    for (int i = 0; i < mu; i++)
-                    {
-                        minn = func1(x1[i], y1[i]);
-                        if (minn < new_min1)
-                        {
-                            new_min1 = func1(x1[i], y1[i]);
-                            index1 = i;
-                        }
-                    }
-                    minn = global_min[0];
-                    for (int i = 0; i < global_min.size(); i++)
-                    {
-                        if (global_min[i] < minn)
-                        {
-                            minn = global_min[i];
-                        }
-                    }
-                    if (new_min1 >= minn || ((x1[index] < -4.5 || x1[index] > 4.5) || (y1[index] < -4.5 || y1[index] > 4.5)) )
-                    {
-                        flag = false;
-                        index = index1;
-                    }
-                }
-                if (a == 2)
-                {
-                    new_min2 = func2(x2[0], y2[0]);
-                    double minn;
-                    for (int i = 0; i < mu; i++)
-                    {
-                        minn = func2(x2[i], y2[i]);
-                        if (minn < new_min2)
-                        {
-                            new_min2 = func2(x2[i], y2[i]);
-                            index1 = i;
-                        }
-                    }
-                    minn = global_min[0];
-                    for (int i = 0; i < global_min.size(); i++)
-                    {
-                        if (global_min[i] < minn)
-                        {
-                            minn = global_min[i];
-                        }
-                    }
-                    if (new_min2 >= minn || ((x2[index] < -2 || x2[index] > 2) || (y2[index] < -2 || y2[index] > 2)))
-                    {
-                        flag = false;
-                        index = index1;
-                    }
-                }
-                if (a == 3)
-                {
-                    new_min3 = func3(x3[0], y3[0]);
-                    double minn;
-                    for (int i = 0; i < mu; i++)
-                    {
-                        minn = func3(x3[i], y3[i]);
-                        if (minn < new_min3)
-                        {
-                            new_min3 = func3(x3[i], y3[i]);
-                            index1 = i;
-                        }
-                    }
-                    minn = global_min[0];
-                    for (int i = 0; i < global_min.size(); i++)
-                    {
-                        if (global_min[i] < minn)
-                        {
-                            minn = global_min[i];
-                        }
-                    }
-                    if (new_min3 >= minn || ((x3[index] < -512 || x3[index] > 512) || (y3[index] < -512 || y3[index] > 512)))
-                    {
-                        flag = false;
-                        index = index1;
-                    }
+                    flag = false;
+                    cout << "iteration = " << iteration << endl;
+                    cout << "f = " << mass_x_y[0][0] << " x = " << mass_x_y[0][1] << " y = " << mass_x_y[0][2] << endl;
                 }
             }
             if (a == 1)
             {
                 cout << "iteration = " << iteration << endl;
-                cout << "f = " << func1(x1[index], y1[index]) << " x = " << x1[index] << " y = " << y1[index] << endl;
+                cout << "f = " << mass_x_y[0][0] << " x = " << mass_x_y[0][1] << " y = " << mass_x_y[0][2] << endl;
             }
             if (a == 2)
             {
                 cout << "iteration = " << iteration << endl;
-                cout << "f = " << func2(x2[index], y2[index]) << " x = " << x2[index] << " y = " << y2[index] << endl;
+                cout << "f = " << mass_x_y[0][0] << " x = " << mass_x_y[0][1] << " y = " << mass_x_y[0][2] << endl;
             }
             if (a == 3)
             {
                 cout << "iteration = " << iteration << endl;
-                cout << "f = " << func3(x3[index], y3[index]) << " x = " << x3[index] << " y = " << y3[index] << endl;
+                cout << "f = " << mass_x_y[0][0] << " x = " << mass_x_y[0][1] << " y = " << mass_x_y[0][2] << endl;
             }
         }
         flag = true;
@@ -463,7 +351,6 @@ public:
                 fl = false;
                 break;
             }
-            global_min.clear();
         }
     }
 };
